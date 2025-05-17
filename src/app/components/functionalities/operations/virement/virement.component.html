@@ -1,0 +1,101 @@
+<h2 style="margin-bottom: 1rem; font-size: 1.5rem;">Virement (Transfer)</h2>
+
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  style="display: flex; flex-direction: column; gap: 1.25rem; max-width: 500px;"
+>
+  <!-- Source Account Search -->
+  <div>
+    <label for="sourceSearch" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+      Compte Source (Client)
+    </label>
+    <input
+      id="sourceSearch"
+      type="text"
+      [value]="selectedCompteSource?.client?.fullName || ''"
+      (input)="onSearchSource($event)"
+      [disabled]="loading"
+      placeholder="Nom complet du client"
+      style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;"
+    />
+    <ul
+      *ngIf="filteredComptesSource$ | async as comptes"
+      style="margin-top: 0.5rem; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0; list-style: none;"
+    >
+      <li
+        *ngFor="let compte of comptes"
+        (click)="selectCompteSource(compte)"
+        style="padding: 0.5rem; cursor: pointer; border-bottom: 1px solid #eee;"
+        (mouseover)="hoveredSource = compte.code"
+        [style.backgroundColor]="hoveredSource === compte.code ? '#f5f5f5' : 'white'"
+      >
+        {{ compte.client?.fullName }} – (Code: {{ compte.code }})
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedCompteSource" style="font-size: 0.95rem; color: #333;">
+    <strong>Compte source sélectionné :</strong> {{ selectedCompteSource.client?.fullName }} ({{ selectedCompteSource.code }})
+  </div>
+
+  <!-- Destination Account Search -->
+  <div>
+    <label for="destinationSearch" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+      Compte Destination (Client)
+    </label>
+    <input
+      id="destinationSearch"
+      type="text"
+      [value]="selectedCompteDestination?.client?.fullName || ''"
+      (input)="onSearchDestination($event)"
+      [disabled]="loading"
+      placeholder="Nom complet du client"
+      style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;"
+    />
+    <ul
+      *ngIf="filteredComptesDestination$ | async as comptes"
+      style="margin-top: 0.5rem; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; padding: 0; list-style: none;"
+    >
+      <li
+        *ngFor="let compte of comptes"
+        (click)="selectCompteDestination(compte)"
+        style="padding: 0.5rem; cursor: pointer; border-bottom: 1px solid #eee;"
+        (mouseover)="hoveredDestination = compte.code"
+        [style.backgroundColor]="hoveredDestination === compte.code ? '#f5f5f5' : 'white'"
+      >
+        {{ compte.client?.fullName }} – (Code: {{ compte.code }})
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedCompteDestination" style="font-size: 0.95rem; color: #333;">
+    <strong>Compte destination sélectionné :</strong> {{ selectedCompteDestination.client?.fullName }} ({{ selectedCompteDestination.code }})
+  </div>
+
+  <!-- Montant Input -->
+  <div>
+    <label for="montant" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Montant</label>
+    <input
+      id="montant"
+      formControlName="montant"
+      type="number"
+      min="0"
+      style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;"
+    />
+  </div>
+
+  <!-- Submit Button -->
+  <button
+    type="submit"
+    [disabled]="form.invalid || loading"
+    style="padding: 0.6rem 1rem; background-color: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;"
+  >
+    Effectuer Virement
+  </button>
+</form>
+
+<!-- Error Display -->
+<div *ngIf="error" style="color: #d32f2f; margin-top: 1rem;">
+  {{ error }}
+</div>
