@@ -1,0 +1,38 @@
+<div class="clients-container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Clients</h2>
+    <a routerLink="/agent/clients/new" class="btn btn-primary">Add New Client</a>
+  </div>
+
+  <!-- Search Field -->
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by name, email, phone, or ID..."
+      [(ngModel)]="searchTerm"
+      (input)="applyFilters()"
+    />
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+      <tr>
+        <th>CODE</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Telephone</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let client of filteredClients">
+        <td>{{ client.id }}</td>
+        <td>{{ client.fullName }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.telephone }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="create-client-container">
+  <h2>Create New Client</h2>
+  <form (ngSubmit)="saveClient()">
+    <label>
+      Full Name:
+      <input [(ngModel)]="client.fullName" name="fullName" required />
+    </label>
+
+    <label>
+      Email:
+      <input [(ngModel)]="client.email" name="email" type="email" required />
+    </label>
+
+    <label>
+      Telephone:
+      <input [(ngModel)]="client.telephone" name="telephone" required />
+    </label>
+
+    <label>
+      Mot de Passe:
+      <input [(ngModel)]="client.password" name="password" required />
+    </label>
+
+    <button type="submit">Save Client</button>
+  </form>
+</div>
