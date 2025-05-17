@@ -1,0 +1,85 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Liste des comptes</h2>
+
+  <!-- Search and Filter Inputs -->
+  <div class="mb-3 row">
+    <div class="col-md-6">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Rechercher par nom du client"
+        [(ngModel)]="searchTerm"
+      />
+    </div>
+    <div class="col-md-6">
+      <select
+        class="form-select"
+        [(ngModel)]="selectedType"
+        aria-label="Filtrer par type de compte"
+      >
+        <option value="">Tous les types</option>
+        <option value="COURANT">Compte Courant</option>
+        <option value="EPARGNE">Compte Épargne</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-light">
+      <tr>
+        <th>Code</th>
+        <th>Client ID</th>
+        <th>Client Nom</th>
+        <th>Client Email</th>
+        <th>Client Téléphone</th>
+        <th>Type</th>
+        <th>Solde</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let compte of filteredComptes()">
+        <td>{{ compte.code }}</td>
+        <td>{{ compte.client?.id }}</td>
+        <td>{{ compte.client?.fullName }}</td>
+        <td>{{ compte.client?.email }}</td>
+        <td>{{ compte.client?.telephone }}</td>
+        <td>{{ compte.type }}</td>
+        <td>{{ compte.solde | currency:'EUR' }}</td>
+        <td>{{ compte.status }}</td>
+
+        <td>
+          <button
+            *ngIf="compte.status === 'CREATED'"
+            class="btn btn-success btn-sm"
+            (click)="changeStatus(compte, 'ACTIVATED')"
+          >
+            Activer
+          </button>
+
+          <button
+            *ngIf="compte.status === 'ACTIVATED'"
+            class="btn btn-warning btn-sm"
+            (click)="changeStatus(compte, 'SUSPENDED')"
+          >
+            Suspendre
+          </button>
+
+          <button
+            *ngIf="compte.status === 'SUSPENDED'"
+            class="btn btn-primary btn-sm"
+            (click)="changeStatus(compte, 'ACTIVATED')"
+          >
+            Réactiver
+          </button>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+</div>
