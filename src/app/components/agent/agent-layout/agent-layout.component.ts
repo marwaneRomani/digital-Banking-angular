@@ -8,17 +8,23 @@ import {
   Router,
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {AuthService} from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-agent-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,
+    RouterModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+  ],
   template: `
     <div class="flex min-h-screen">
       <!-- Sidebar -->
       <aside class="w-64 bg-gray-800 text-white p-4 flex flex-col">
-        <h2 class="text-xl font-bold mb-6">Agent Panel</h2>
+        <h2 class="text-black text-xl font-bold mb-6">Agent Panel</h2>
         <nav class="flex flex-col gap-2">
           <a
             routerLink="/agent/dashboard"
@@ -85,10 +91,10 @@ import {AuthService} from '../../../services/auth.service';
           >
             Virement
           </a>
-
         </nav>
 
-        <button style="padding: 10px 15px;
+        <button
+          style="padding: 10px 15px;
                         background-color: #e74c3c;
                         color: white;
                         border: none;
@@ -96,10 +102,10 @@ import {AuthService} from '../../../services/auth.service';
                         cursor: pointer;
                         font-size: 16px;
                         transition: background-color 0.3s;"
-                (click)="logout()">
+          (click)="logout()"
+        >
           Logout
         </button>
-
       </aside>
 
       <!-- Main content -->

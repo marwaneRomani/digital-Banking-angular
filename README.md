@@ -1,59 +1,43 @@
-# ClientAngular
+# Projet Digital Banking
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
+# Frontend
 
-## Development server
+Ce projet est une application bancaire digitale développée avec Angular 19. Elle propose une interface web pour deux types d'utilisateurs : les agents bancaires et les clients.
 
-To start a local development server, run:
+### Architecture de l'application
 
-```bash
-ng serve
-```
+L'application est structurée selon les principes d'Angular avec les composants suivants :
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Système d'authentification** : Géré par AuthentificationService qui s'occupe de la connexion, déconnexion et gestion des tokens JWT.
+- **Services pour l’interaction avec le backends** : `clientSercive compteService operationService`
+- **Guards de sécurité** : Trois guards dans auth.guard.ts protègent les routes :
+  - `authGuard` - vérifie si l'utilisateur est authentifié
+  - `agentGuard` - vérifie si l'utilisateur a le rôle AGENT
+  - `clientGuard`  - vérifie si l'utilisateur a le rôle CLIENT
 
-## Code scaffolding
+### Fonctionnalités principales
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. **Authentification** :
+   - Page de connexion avec validation des formulaires
+   - Stockage du token JWT et des informations utilisateur dans le localStorage
+   - Déconnexion avec redirection
+2. **Tableaux de bord spécifiques aux rôles** :
+   - Dashboard agent pour la gestion des clients, des comtes clients et des opérations
+   - Dashboard client pour consulter ses comptes et transactions
+3. **Sécurité** :
+   - Interception des requêtes HTTP pour ajouter le token d'authentification
+   - Redirection vers une page "Non autorisé" en cas d'accès non permis
 
-```bash
-ng generate component component-name
-```
+![alt text](<Screenshot from 2025-05-18 22-31-50.png>)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+![alt text](<Screenshot from 2025-05-18 22-33-19.png>)
 
-```bash
-ng generate --help
-```
+![alt text](<Screenshot from 2025-05-18 22-34-06.png>)
 
-## Building
+![alt text](<Screenshot from 2025-05-18 22-36-14.png>)
 
-To build the project run:
+![alt text](<Screenshot from 2025-05-18 22-38-16.png>)
 
-```bash
-ng build
-```
+![alt text](<Screenshot from 2025-05-18 22-40-44.png>)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+![alt text](<Screenshot from 2025-05-18 22-35-01.png>)
